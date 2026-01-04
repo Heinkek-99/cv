@@ -35,13 +35,15 @@ jobs:
       - uses: actions/download-artifact@v4
         with:
           path: github_artifacts
-      # - name: move
-      #   run: mkdir -p github_deploy && mv github_artifacts/*/* github_deploy
-      - name: deploy
+      - name: move
+        run: mkdir -p github_deploy && mv github_artifacts/*.pdf github_deploy
+      - name: List files in github_artifacts
+        run: ls -la github_artifacts
+      - name: deploy on orphan branch
         uses: peaceiris/actions-gh-pages@v4
         with:
           github_token: ${{ secrets.GITHUB_TOKEN }}
-          publish_dir: ./public
+          publish_dir: ./github_deploy
           publish_branch: build
           force_orphan: true
           enable_jekyll: true
